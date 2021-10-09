@@ -13,6 +13,7 @@ import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.google.common.truth.Truth.assertThat
+import com.nfragiskatos.news_api_client.data.model.Article
 
 class NewsAPIServiceTest {
     private lateinit var service: NewsAPIService
@@ -47,6 +48,15 @@ class NewsAPIServiceTest {
         }
     }
 
+    @Test
+    fun getTopHeadlines_receivedResponse_correctPageSize() {
+        runBlocking {
+            enqueueMockResponse("newsresponse.json")
+            val body: APIResponse? = service.getTopHeadlines("us", 1).body()
+            val articles: List<Article> = body!!.articles
+            assertThat(articles.size).isEqualTo(20)
+        }
+    }
 
     @After
     fun tearDown() {
