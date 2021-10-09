@@ -3,6 +3,22 @@ plugins {
     id 'kotlin-android'
 }
 
+// sensitive data read
+def noKeyFound = '"NO_KEY_FOUND"'
+def newsApiKey = noKeyFound
+def sensitiveDataFile = file('../sensitive_data.txt')
+Properties sensitiveData = new Properties()
+
+if (sensitiveDataFile.canRead()) {
+    // Read the sensitive data from file sensitive_data.txt
+    sensitiveData.load(new FileInputStream(sensitiveDataFile))
+    if (sensitiveData != null) {
+        if (sensitiveData.containsKey('newsApiKey')) {
+            newsApiKey = sensitiveData['newsApiKey']
+        }
+    }
+}
+
 android {
     compileSdk 31
 
@@ -14,11 +30,17 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "NEWS_API_KEY", newsApiKey
+        resValue "string", "NEWS_API_KEY", newsApiKey
+
+        buildConfigField "String", "NEWS_API_BASE_URL", "\"https://newsapi.org/v2/\""
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
