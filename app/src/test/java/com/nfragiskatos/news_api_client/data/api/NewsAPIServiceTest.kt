@@ -54,7 +54,22 @@ class NewsAPIServiceTest {
             enqueueMockResponse("newsresponse.json")
             val body: APIResponse? = service.getTopHeadlines("us", 1).body()
             val articles: List<Article> = body!!.articles
+
             assertThat(articles.size).isEqualTo(20)
+        }
+    }
+
+    @Test
+    fun getTopHeadlines_receivedResponse_correctContent() {
+        runBlocking {
+            enqueueMockResponse("newsresponse.json")
+            val body: APIResponse? = service.getTopHeadlines("us", 1).body()
+            val articles: List<Article> = body!!.articles
+            val article = articles[0]
+
+            assertThat(article.author).isEqualTo("Shehan Jeyarajah")
+            assertThat(article.url).isEqualTo("https://www.cbssports.com/college-football/news/oklahoma-vs-texas-score-takeaways-caleb-williams-propels-sooners-to-largest-comeback-in-red-river-history/live/")
+            assertThat(article.publishedAt).isEqualTo("2021-10-09T20:37:00Z")
         }
     }
 
