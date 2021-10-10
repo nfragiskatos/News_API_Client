@@ -1,7 +1,8 @@
 package com.nfragiskatos.news_api_client.presentation.di
 
-import com.nfragiskatos.news_api_client.domain.repository.NewsRepository
+import android.app.Application
 import com.nfragiskatos.news_api_client.domain.usecase.GetNewsHeadlinesUseCase
+import com.nfragiskatos.news_api_client.presentation.viewmodel.NewsViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,11 +11,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class UseCaseModule {
+class FactoryModule {
 
     @Provides
     @Singleton
-    fun provideGetNewsHeadlineUseCase(newsRepository: NewsRepository) : GetNewsHeadlinesUseCase {
-        return GetNewsHeadlinesUseCase(newsRepository)
+    fun provideNewsViewModelFactory(app: Application, getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase) : NewsViewModelFactory {
+        return NewsViewModelFactory(app, getNewsHeadlinesUseCase)
     }
 }
