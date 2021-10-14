@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.nfragiskatos.news_api_client.data.model.Article
 import com.nfragiskatos.news_api_client.databinding.NewsListItemBinding
 
-class NewsAdapter() : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>()  {
+class NewsAdapter() : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     private val callback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -38,7 +38,8 @@ class NewsAdapter() : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>()  {
         return differ.currentList.size
     }
 
-    inner class NewsViewHolder(private val binding: NewsListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NewsViewHolder(private val binding: NewsListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             binding.tvTitle.text = article.title
             binding.tvDescription.text = article.description
