@@ -69,7 +69,7 @@ class NewsViewModel(
 
     val searchedNews : MutableLiveData<Resource<APIResponse>> = MutableLiveData()
 
-    fun searchNews(
+    fun getSearchedNews(
         country: String,
         page: Int,
         searchQuery: String
