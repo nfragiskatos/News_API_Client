@@ -2,6 +2,7 @@ package com.nfragiskatos.news_api_client.presentation.di
 
 import android.app.Application
 import com.nfragiskatos.news_api_client.domain.usecase.GetNewsHeadlinesUseCase
+import com.nfragiskatos.news_api_client.domain.usecase.GetSearchedNewsUseCase
 import com.nfragiskatos.news_api_client.presentation.viewmodel.NewsViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,11 @@ class FactoryModule {
 
     @Provides
     @Singleton
-    fun provideNewsViewModelFactory(app: Application, getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase) : NewsViewModelFactory {
-        return NewsViewModelFactory(app, getNewsHeadlinesUseCase)
+    fun provideNewsViewModelFactory(
+        app: Application,
+        getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
+        getSearchedNewsUseCase: GetSearchedNewsUseCase
+    ): NewsViewModelFactory {
+        return NewsViewModelFactory(app, getNewsHeadlinesUseCase, getSearchedNewsUseCase)
     }
 }
