@@ -6,7 +6,7 @@ import com.nfragiskatos.news_api_client.domain.repository.NewsRepository
 
 class GetSearchedNewsUseCase(private val newsRepository: NewsRepository) {
 
-    suspend fun execute(searchQuery: String) : Resource<APIResponse> {
-        return newsRepository.getSearchedNews(searchQuery)
+    suspend fun execute(country: String, page: Int, searchQuery: String) : Resource<APIResponse> {
+        return newsRepository.getSearchedNewsHeadlines(country, page, searchQuery)
     }
 }
