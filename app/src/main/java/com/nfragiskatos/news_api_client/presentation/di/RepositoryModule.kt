@@ -1,6 +1,7 @@
 package com.nfragiskatos.news_api_client.presentation.di
 
 import com.nfragiskatos.news_api_client.data.repository.NewsRepositoryImpl
+import com.nfragiskatos.news_api_client.data.repository.datasource.NewsLocalDataSource
 import com.nfragiskatos.news_api_client.data.repository.datasource.NewsRemoteDataSource
 import com.nfragiskatos.news_api_client.domain.repository.NewsRepository
 import dagger.Module
@@ -15,7 +16,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(newsRemoteDataSource: NewsRemoteDataSource) : NewsRepository {
-        return NewsRepositoryImpl(newsRemoteDataSource)
+    fun provideNewsRepository(newsRemoteDataSource: NewsRemoteDataSource, newsLocalDataSource: NewsLocalDataSource) : NewsRepository {
+        return NewsRepositoryImpl(newsRemoteDataSource, newsLocalDataSource)
     }
 }
