@@ -1,10 +1,7 @@
 package com.nfragiskatos.news_api_client.presentation.di
 
 import com.nfragiskatos.news_api_client.domain.repository.NewsRepository
-import com.nfragiskatos.news_api_client.domain.usecase.GetNewsHeadlinesUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.GetSavedNewsUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.GetSearchedNewsUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.SaveNewsUseCase
+import com.nfragiskatos.news_api_client.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +34,11 @@ class UseCaseModule {
     @Singleton
     fun provideGetSavedNewsUseCase(newsRepository: NewsRepository): GetSavedNewsUseCase {
         return GetSavedNewsUseCase(newsRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteSavedNewsUseCase(newsRepository: NewsRepository): DeleteSavedNewsUseCase {
+        return DeleteSavedNewsUseCase(newsRepository)
     }
 }

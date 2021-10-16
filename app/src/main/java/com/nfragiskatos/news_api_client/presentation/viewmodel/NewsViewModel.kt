@@ -12,10 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.nfragiskatos.news_api_client.data.model.APIResponse
 import com.nfragiskatos.news_api_client.data.model.Article
 import com.nfragiskatos.news_api_client.data.util.Resource
-import com.nfragiskatos.news_api_client.domain.usecase.GetNewsHeadlinesUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.GetSavedNewsUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.GetSearchedNewsUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.SaveNewsUseCase
+import com.nfragiskatos.news_api_client.domain.usecase.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -26,7 +23,8 @@ class NewsViewModel(
     private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
     private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
     private val saveNewsUseCase: SaveNewsUseCase,
-    private val getSavedNewsUseCase: GetSavedNewsUseCase
+    private val getSavedNewsUseCase: GetSavedNewsUseCase,
+    private val deleteSavedNewsUseCase: DeleteSavedNewsUseCase
 ) : AndroidViewModel(app) {
 
     val newsHeadlines: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
@@ -74,7 +72,7 @@ class NewsViewModel(
         return false
     }
 
-    val searchedNews : MutableLiveData<Resource<APIResponse>> = MutableLiveData()
+    val searchedNews: MutableLiveData<Resource<APIResponse>> = MutableLiveData()
 
     fun getSearchedNews(
         country: String,
@@ -98,9 +96,13 @@ class NewsViewModel(
         saveNewsUseCase.execute(article)
     }
 
-    fun getSavedNews() = liveData{
+    fun getSavedNews() = liveData {
         getSavedNewsUseCase.execute().collect {
             emit(it)
         }
+    }
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        deleteSavedNewsUseCase.execute(article)
     }
 }

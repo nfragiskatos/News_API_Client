@@ -1,10 +1,7 @@
 package com.nfragiskatos.news_api_client.presentation.di
 
 import android.app.Application
-import com.nfragiskatos.news_api_client.domain.usecase.GetNewsHeadlinesUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.GetSavedNewsUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.GetSearchedNewsUseCase
-import com.nfragiskatos.news_api_client.domain.usecase.SaveNewsUseCase
+import com.nfragiskatos.news_api_client.domain.usecase.*
 import com.nfragiskatos.news_api_client.presentation.viewmodel.NewsViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -23,14 +20,16 @@ class FactoryModule {
         getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
         getSearchedNewsUseCase: GetSearchedNewsUseCase,
         saveNewsUseCase: SaveNewsUseCase,
-        getSavedNewsUseCase: GetSavedNewsUseCase
+        getSavedNewsUseCase: GetSavedNewsUseCase,
+        deleteSavedNewsUseCase: DeleteSavedNewsUseCase
     ): NewsViewModelFactory {
         return NewsViewModelFactory(
             app,
             getNewsHeadlinesUseCase,
             getSearchedNewsUseCase,
             saveNewsUseCase,
-            getSavedNewsUseCase
+            getSavedNewsUseCase,
+            deleteSavedNewsUseCase
         )
     }
 }
