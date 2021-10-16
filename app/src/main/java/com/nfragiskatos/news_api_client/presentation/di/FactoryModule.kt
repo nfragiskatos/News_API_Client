@@ -2,6 +2,7 @@ package com.nfragiskatos.news_api_client.presentation.di
 
 import android.app.Application
 import com.nfragiskatos.news_api_client.domain.usecase.GetNewsHeadlinesUseCase
+import com.nfragiskatos.news_api_client.domain.usecase.GetSavedNewsUseCase
 import com.nfragiskatos.news_api_client.domain.usecase.GetSearchedNewsUseCase
 import com.nfragiskatos.news_api_client.domain.usecase.SaveNewsUseCase
 import com.nfragiskatos.news_api_client.presentation.viewmodel.NewsViewModelFactory
@@ -21,8 +22,15 @@ class FactoryModule {
         app: Application,
         getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
         getSearchedNewsUseCase: GetSearchedNewsUseCase,
-        saveNewsUseCase: SaveNewsUseCase
+        saveNewsUseCase: SaveNewsUseCase,
+        getSavedNewsUseCase: GetSavedNewsUseCase
     ): NewsViewModelFactory {
-        return NewsViewModelFactory(app, getNewsHeadlinesUseCase, getSearchedNewsUseCase, saveNewsUseCase)
+        return NewsViewModelFactory(
+            app,
+            getNewsHeadlinesUseCase,
+            getSearchedNewsUseCase,
+            saveNewsUseCase,
+            getSavedNewsUseCase
+        )
     }
 }
