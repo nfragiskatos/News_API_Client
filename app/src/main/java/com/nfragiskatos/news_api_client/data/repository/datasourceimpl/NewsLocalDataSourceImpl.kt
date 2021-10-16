@@ -13,4 +13,10 @@ class NewsLocalDataSourceImpl(private val articleDao: ArticleDao) : NewsLocalDat
     override fun getSavedArticles(): Flow<List<Article>> {
         return articleDao.getAllArticles()
     }
+
+    override suspend fun deleteArticles(article: Article) {
+        articleDao.deleteArticle(article)
+    }
+
+
 }
