@@ -18,6 +18,7 @@ Practice the use of the following design patterns / technologies
 Presentation design was not the focus of the app therefore the interface is fleshed out just enough to test the main functionality.
 
 ### Home Screen
-
+![homepage](https://user-images.githubusercontent.com/38383279/137642608-18e40aa6-7fc3-4ce7-bf26-e44cd93258b5.PNG)
 
 ### Article Web View
+![webview](https://user-images.githubusercontent.com/38383279/137642610-7c6128ce-bc0b-49a1-9fb0-bf3141f7c048.PNG)
