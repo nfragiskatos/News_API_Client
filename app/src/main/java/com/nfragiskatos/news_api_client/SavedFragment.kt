@@ -1,23 +1,25 @@
 package com.nfragiskatos.news_api_client
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +29,6 @@ import com.nfragiskatos.news_api_client.databinding.FragmentSavedBinding
 import com.nfragiskatos.news_api_client.presentation.adapter.NewsAdapter
 import com.nfragiskatos.news_api_client.presentation.compose.articlelist.ArticleListItem
 import com.nfragiskatos.news_api_client.presentation.viewmodel.NewsViewModel
-import java.util.*
 
 
 class SavedFragment : Fragment() {
@@ -47,6 +48,7 @@ class SavedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_saved, container, false)
     }
 
+    @ExperimentalMaterialApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSavedBinding.bind(view)
@@ -110,6 +112,8 @@ class SavedFragment : Fragment() {
         }
     }
 
+    // TODO: implement undo after swipe to delete
+    @ExperimentalMaterialApi
     @Composable
     private fun DisplaySavedArticles(viewModel: NewsViewModel) {
         val articles by viewModel.getSavedNews().observeAsState()
@@ -121,13 +125,58 @@ class SavedFragment : Fragment() {
                 )
             }
         } else {
-            LazyColumn(contentPadding = PaddingValues(horizontal = 4.dp, vertical = 4.dp)) {
-                items(
+            LazyColumn() {
+                itemsIndexed(
                     items = articles!!,
-                    itemContent = {
-                        ArticleListItem(article = it)
-                    }
-                )
+                    key = { _, article -> article.hashCode() }
+                ) { _, article ->
+                    val state = rememberDismissState(
+                        confirmStateChange = {
+                            if (it == DismissValue.DismissedToStart || it == DismissValue.DismissedToEnd) {
+                                viewModel.deleteArticle(article)
+                            }
+                            true
+                        }
+                    )
+
+                    SwipeToDismiss(state = state,
+                        background = {
+                            val color = when (state.dismissDirection) {
+                                DismissDirection.StartToEnd -> Color.Red
+                                DismissDirection.EndToStart -> Color.Red
+                                null -> Color.Transparent
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color)
+                                    .padding(PaddingValues(20.dp))
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier.align(
+                                        when (state.dismissDirection) {
+                                            DismissDirection.StartToEnd -> Alignment.CenterStart
+                                            DismissDirection.EndToStart -> Alignment.CenterEnd
+                                            null -> Alignment.CenterStart
+                                        }
+                                    )
+                                )
+                            }
+                        },
+                        dismissContent = {
+                            ArticleListItem(article = article)
+                        })
+                }
+//                items(
+//                    items = articles!!,
+//                    itemContent = {
+//                        ArticleListItem(article = it)
+//                    }
+//                )
             }
         }
     }

@@ -1,8 +1,6 @@
 package com.nfragiskatos.news_api_client.presentation.compose.articlelist
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,14 +14,17 @@ import com.nfragiskatos.news_api_client.data.model.Article
 
 @Composable
 fun ArticleListItem(article: Article) {
+
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp),
-        elevation = 10.dp,
-        shape = RoundedCornerShape(
-            corner = CornerSize(5.dp),
-        ),
+            .padding(PaddingValues(top = 4.dp, bottom = 4.dp)),
+//            .padding(4.dp),
+//        elevation = 10.dp,
+//        shape = RoundedCornerShape(
+//            corner = CornerSize(5.dp),
+//        )
+
         backgroundColor = colorResource(id = R.color.list_background)
     ) {
         Column(
