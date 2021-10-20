@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/layout_background"
-    android:orientation="vertical"
-    tools:context=".SavedFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSaved"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/saved_compose_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:visibility="visible" />
+        android:layout_height="match_parent"
+        android:background="@color/saved_background"
+        android:orientation="vertical"
+        tools:context=".SavedFragment" />
 
-</LinearLayout>
+</layout>
