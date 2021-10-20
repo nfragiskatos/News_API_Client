@@ -132,7 +132,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun setSearchView() {
-        fragmentNewsBinding.svNews.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        fragmentNewsBinding.svNews.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 viewModel.getSearchedNews("us", page, p0.toString())
                 viewSearchedNews()
